@@ -41,4 +41,5 @@ def check_token(f):
             res.set_cookie("x-access-token", value=new_token)
             res.set_cookie("x-access-refresh-token", value=new_refresh_token)
         return res
+    wrapper.__name__ = f.__name__
     return wrapper

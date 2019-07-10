@@ -37,6 +37,15 @@ def login():
 
 @api_blueprint.route('/auth/users', methods=['GET'])
 @check_token
-def get_users(current_user):
+def get_all_users(current_user):
     users = User.query.all()
-    return users_schema.jsonify(users)
+    return jsonify({'ok': True, 'users': users_schema.dump(users).data})
+
+
+@api_blueprint.route('/auth/user/<user_id>/', methods=['GET'])
+@check_token
+def get_user(current_user, user_id):
+    user = User.query.filter_by(id=user_id).first()
+    if not user:
+        return jsonify({'ok': False, 'error': "User doesn't exist"})
+    return jsonify({'ok': True, 'user': user_schema.dump(user).data})
