@@ -21,5 +21,11 @@ from flaskrest.api import api_blueprint
 app.register_blueprint(api_blueprint)
 
 
+@app.after_request
+def after_request(response):
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
+
+
 import flaskrest.api.auth.models
 import flaskrest.api.todos.models
