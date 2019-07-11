@@ -31,8 +31,13 @@ def check_token(f):
             if not refresh_token:
                 return jsonify({'ok': False, 'error': 'Login Required'}), 401
 
-            token_data = jwt.decode(refresh_token, app.config['SECRET_KEY'])
-            current_user = User.query.filter_by(id=token_data['id']).first()
+            try:
+                token_data = jwt.decode(
+                    refresh_token, app.config['SECRET_KEY'])
+                current_user = User.query.filter_by(
+                    id=token_data['id']).first()
+            except jwt.ExpiredSignatureError:
+                return jsonify({'ok': False, 'error': 'Login Required'}), 401
             print('refreshing...')
             new_token, new_refresh_token = create_token(current_user)
         except jwt.InvalidTokenError:

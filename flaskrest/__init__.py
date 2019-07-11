@@ -21,4 +21,5 @@ from flaskrest.api import api_blueprint
 app.register_blueprint(api_blueprint)
 
 
-from flaskrest.api.auth import models
+import flaskrest.api.auth.models
+import flaskrest.api.todos.models

@@ -1,1 +1,2 @@
-from flaskrest.api.auth import routes
+import flaskrest.api.auth.routes
+import flaskrest.api.todos.routes
