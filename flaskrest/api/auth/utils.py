@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from flaskrest import app
 from flask import request, jsonify, make_response
 from flaskrest.api.auth.models import User
+from functools import wraps
 
 
 def create_token(user):
@@ -14,6 +15,7 @@ def create_token(user):
 
 
 def check_token(f):
+    @wraps(f)
     def wrapper(*args, **kwargs):
         token = request.cookies.get('x-access-token')
         new_token = None
@@ -41,5 +43,4 @@ def check_token(f):
             res.set_cookie("x-access-token", value=new_token)
             res.set_cookie("x-access-refresh-token", value=new_refresh_token)
         return res
-    wrapper.__name__ = f.__name__
     return wrapper

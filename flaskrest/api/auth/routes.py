@@ -42,6 +42,14 @@ def get_all_users(current_user):
     return jsonify({'ok': True, 'users': users_schema.dump(users).data})
 
 
+@api_blueprint.route('/auth/logout', methods=['GET'])
+def logout_user():
+    res = make_response(jsonify({'ok': True}))
+    res.delete_cookie('x-access-token')
+    res.delete_cookie('x-access-refresh-token')
+    return res
+
+
 @api_blueprint.route('/auth/user/<user_id>/', methods=['GET'])
 @check_token
 def get_user(current_user, user_id):
