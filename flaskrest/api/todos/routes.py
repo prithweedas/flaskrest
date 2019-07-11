@@ -35,3 +35,17 @@ def delete_todo(current_user, id):
     db.session.delete(todo)
     db.session.commit()
     return jsonify({'ok': True})
+
+
+@api_blueprint.route('/todo/edit/<int:id>', methods=['PUT'])
+@check_token
+def update_todo(current_user, id):
+    todo = Todo.query.filter_by(id=id).first()
+    if not todo:
+        return jsonify({'ok': False, 'error': "Todo doesn't exist"})
+    if todo.owner.id != current_user.id:
+        return jsonify({'ok': False, 'error': "You don't own this todo"}), 401
+    todo.title = request.json['title'] or todo.title
+    todo.description = request.json['description']or todo.description
+    db.session.commit()
+    return jsonify({'ok': True, 'todo': todo_schema.dump(todo).data})

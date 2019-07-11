@@ -7,4 +7,4 @@ class TodoSchema(ma.Schema):
     owner = fields.Nested(UserSchema)
 
     class Meta:
-        fields = ('id', 'title', 'date_posted', 'description', 'owner')
+        fields = ('id', 'title', 'date_posted', 'description')
