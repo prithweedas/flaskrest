@@ -24,7 +24,7 @@ def create_todo(current_user):
     return jsonify({'ok': True, 'todo': todo_schema.dump(todo).data})
 
 
-@api_blueprint.route('/todo/delete/<int:id>', methods=['POST'])
+@api_blueprint.route('/todo/delete/<int:id>', methods=['DELETE'])
 @check_token
 def delete_todo(current_user, id):
     todo = Todo.query.filter_by(id=id).first()
