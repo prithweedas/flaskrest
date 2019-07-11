@@ -13,7 +13,7 @@ class Todo(db.Model):
     def __init__(self, title, description, user):
         self.title = title
         self.description = description
-        self.user_id = user.id
+        self.owner = user
 
     def __repr__(self):
-        return f"Post('{self.title}', '{self.date_posted}')"
+        return f"Todo('{self.title}', '{self.description}')"
