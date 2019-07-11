@@ -50,7 +50,7 @@ def logout_user():
     return res
 
 
-@api_blueprint.route('/auth/user/<user_id>/', methods=['GET'])
+@api_blueprint.route('/auth/user/<int:user_id>/', methods=['GET'])
 @check_token
 def get_user(current_user, user_id):
     user = User.query.filter_by(id=user_id).first()
